@@ -2,7 +2,7 @@
 const CACHE_NAME = 'oshi-diet-v4';
 const BASE = '/My-D13t-d6ta2/';
 const ASSETS = [
-  BASE + 'oshi_diet.html',
+  BASE + 'index.html',
   BASE + 'manifest.json',
   BASE + 'icon-152.png',
   BASE + 'icon-167.png',
@@ -45,7 +45,7 @@ self.addEventListener('fetch', e => {
           })
           .catch(() => {
             if (e.request.destination === 'document') {
-              return caches.match(BASE + 'oshi_diet.html');
+              return caches.match(BASE + 'index.html');
             }
           });
       })

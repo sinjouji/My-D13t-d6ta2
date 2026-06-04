@@ -2,7 +2,7 @@
   "name": "推し活ダイエット",
   "short_name": "推しダイエット",
   "description": "推しと一緒にダイエットを頑張るアプリ",
-  "start_url": "/My-D13t-d6ta2/oshi_diet.html",
+  "start_url": "/My-D13t-d6ta2/index.html",
   "scope": "/My-D13t-d6ta2/",
   "display": "standalone",
   "orientation": "portrait",
