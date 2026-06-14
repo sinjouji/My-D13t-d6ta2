@@ -951,8 +951,6 @@ function calcStreak(){
   let streak=0,cur=nowJST();
   cur.setHours(0,0,0,0);
   while(true){
-    const ds=cur.toISOString().slice(0,10);
-    // JSTの日付文字列に変換
     const jstDs=new Date(cur.getTime()+9*60*60*1000).toISOString().slice(0,10);
     if(ws.find(w=>w.date===jstDs)){streak++;cur.setDate(cur.getDate()-1);}
     else break;
@@ -1110,7 +1108,10 @@ function getHabitLog(date){
 function habitPlus(habitId,date){
   const log=getHabitLog(date);
   if(!log[habitId])log[habitId]=[];
-  log[habitId].push(nowJST().toTimeString().slice(0,5));
+  const now=new Date();
+  const hh=String(now.getHours()).padStart(2,'0');
+  const mm=String(now.getMinutes()).padStart(2,'0');
+  log[habitId].push(`${hh}:${mm}`);
   sv();renderHabitInModal(date);
 }
 function habitMinus(habitId,date,idx){
@@ -1196,7 +1197,7 @@ function renderGraph(range){
   if(range==='week')cut.setDate(now.getDate()-7);
   else if(range==='month')cut.setDate(now.getDate()-30);
   else cut.setFullYear(now.getFullYear()-1);
-  const fil=ws.filter(w=>w.date>=cut.toISOString().slice(0,10));
+  const fil=ws.filter(w=>w.date>=new Date(cut.getTime()+9*60*60*1000).toISOString().slice(0,10));
   const cv=document.getElementById('gc'),ctx=cv.getContext('2d');
   const W=cv.offsetWidth||360,H=200;
   cv.width=W*2;cv.height=H*2;ctx.scale(2,2);ctx.clearRect(0,0,W,H);
@@ -1780,7 +1781,7 @@ function renderBackupBanner(){
 // ─── PWA / ServiceWorker ───
 if('serviceWorker' in navigator){
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/My-D13t-d6ta2/sw.js', {scope: '/My-D13t-d6ta2/'})
+    navigator.serviceWorker.register('./sw.js', {scope: '/'})
       .then(reg => console.log('SW registered:', reg.scope))
       .catch(err => console.log('SW registration failed:', err));
   });
